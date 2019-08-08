@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.luyao.pojo.Srcfile" table="srcfile" schema="sshbaidu">
+        <id name="filecode">
+            <column name="filecode" sql-type="char(32)" length="32"/>
+        </id>
+        <property name="filepath">
+            <column name="filepath" sql-type="varchar(150)" length="150"/>
+        </property>
+        <property name="uptime">
+            <column name="uptime" sql-type="datetime"/>
+        </property>
+        <property name="author">
+            <column name="author" sql-type="varchar(50)" length="50"/>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.luyao.pojo.Filetbl" table="filetbl" schema="sshbaidu">
+        <id name="fileId">
+            <column name="fileId" sql-type="int(11)"/>
+        </id>
+        <property name="filename">
+            <column name="filename" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="username">
+            <column name="username" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="uploadDate">
+            <column name="uploadDate" sql-type="datetime"/>
+        </property>
+        <property name="downcode">
+            <column name="downcode" sql-type="varchar(32)" length="32"/>
+        </property>
+        <property name="filepath">
+            <column name="filepath" sql-type="varchar(150)" length="150"/>
+        </property>
+       <property name="sortid">
+            <column name="sortid" sql-type="int(11)"/>
+        </property>
+        <property name="sortname">
+            <column name="sortname" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="srcmd5">
+            <column name="srcmd5" sql-type="char(32)" length="32"/>
+        </property>
+        <!--        <many-to-one name="netuserByUsername" class="com.luyao.pojo.Netuser">-->
+        <!--            <column name="username"/>-->
+        <!--        </many-to-one>-->
+        <!--        <many-to-one name="srcfileBySrcmd5" class="com.luyao.pojo.Srcfile">-->
+        <!--            <column name="srcmd5"/>-->
+        <!--        </many-to-one>-->
+<!--        <many-to-one name="filesortBySortid" class="com.luyao.pojo.Filesort">-->
+        <!--            <column name="sortid" />-->
+        <!--        </many-to-one>-->
+    </class>
+</hibernate-mapping>

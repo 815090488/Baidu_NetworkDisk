@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.luyao.pojo.Filesort" table="filesort" schema="sshbaidu">
+        <id name="sortid">
+            <column name="sortid" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="sortname">
+            <column name="sortname" sql-type="varchar(30)" length="30" />
+        </property>
+        <property name="remark">
+            <column name="remark" sql-type="varchar(100)" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

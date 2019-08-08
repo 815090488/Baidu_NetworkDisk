@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.multipart.maxSize" value="500000000"/>
+    <package name="default" extends="struts-default">
+        <!--        注册-->
+        <action method="register" name="register" class="com.luyao.action.UserAction">
+            <result name="success" type="redirect">index.jsp</result>
+            <result name="input">register.jsp</result>
+        </action>
+<!--        修改密码-->
+        <action method="changePas" name="changePas" class="com.luyao.action.UserAction">
+            <result name="success">index.jsp</result>
+            <result name="input">changePas.jsp</result>
+        </action>
+<!--        购买会员-->
+        <action method="buyVIP" name="buyVIP" class="com.luyao.action.UserAction">
+            <result name="success" type="redirectAction">fileList</result>
+            <result name="input">VIP.jsp</result>
+        </action>
+        <!--        登录-->
+        <action method="Login" name="Login" class="com.luyao.action.UserAction">
+            <!--redirect重定向  地址栏改变    请求转发：forword 一次请求，地址栏不变-->
+            <result name="success" type="redirectAction">fileList</result>
+            <result name="input">index.jsp</result>
+        </action>
+
+        <!--        文件上传-->
+        <action method="upload" name="upload" class="com.luyao.action.FileAction">
+            <result name="success" type="redirectAction">fileList</result>
+            <result name="input" type="redirect">index.jsp</result>
+        </action>
+
+
+<!--        图片展示-->
+        <action method="selectAction" name="selectAction" class="com.luyao.action.SelectAction">
+            <result name="success">upload.jsp</result>
+        </action>
+
+<!--        搜索文件-->
+        <action method="selectFile" name="selectFile" class="com.luyao.action.SelectAction">
+            <result name="success">upload.jsp</result>
+        </action>
+
+        <!--邮箱验证-->
+        <action method="AuthCode" name="AuthCode" class="com.luyao.action.UserAction"></action>
+<!--        修改密码邮箱验证-->
+        <action method="changeAuthCode" name="changeAuthCode" class="com.luyao.action.UserAction"></action>
+
+
+        <!--        文件下载-->
+        <action name="fileList" class="com.luyao.action.FileAction" method="fileList">
+            <result>upload.jsp</result>
+        </action>
+        <action name="down" class="com.luyao.action.FileAction" method="down">
+            <!--输出流-->
+            <result name="success" type="stream">
+                <param name="contentType">application/actet-stream;charset=utf-8</param>
+                <param name="inputName">myInput</param>
+                <param name="contentDisposition">attachment;filename="${filename}"</param>
+                <param name="bufferSize">4096</param>
+            </result>
+        </action>
+    </package>
+</struts>

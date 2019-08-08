@@ -113,7 +113,7 @@ public class FileAction extends BaseAction {
         try {
             for (int i = 0; i < file.length; i++) {
                 File saveFile = new File(Config.saveDir, FileUtil.getUnqiueByName(fileFileName[i]));
-                FileUtils.copyFile(file[i], saveFile);
+
 
                 //filepath截取文件名字
                 String absolutePath = saveFile.getAbsolutePath();
@@ -153,8 +153,9 @@ public class FileAction extends BaseAction {
                     filetb.setSrcmd5(fileMd5);
                     filetb.setSortid(fileSort.getSortid());
                     fileDao.saveFile(null, null, filetb);
-                    return SUCCESS;
                 } else {
+
+                    FileUtils.copyFile(file[i], saveFile);
                     //入库
                     Srcfile srcfile = new Srcfile();
                     srcfile.setFilecode(fileMd5);

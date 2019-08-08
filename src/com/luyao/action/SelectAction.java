@@ -3,6 +3,7 @@ package com.luyao.action;
 import com.luyao.dao.FileDao;
 import com.luyao.dao.SelectDao;
 import com.luyao.pojo.Filetbl;
+import com.luyao.pojo.Netuser;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,9 @@ public class SelectAction extends BaseAction {
 //        selectFile
         String selectFile = requestSession.getParameter("selectFile");
         System.out.println(selectFile+"------selectFile-----------  SelectAction-----");
-        List<Filetbl> filetblList = selectDao.selectfile(selectFile);
+        Netuser user = (Netuser) session.get("user");
+        String username = user.getUsername();
+        List<Filetbl> filetblList = selectDao.selectfile(selectFile,username);
         System.out.println(filetblList+"list-------------selectList       --SelectAction----------------");
         request.put("filetbls",filetblList);
         return SUCCESS;
@@ -34,8 +37,10 @@ public class SelectAction extends BaseAction {
         HttpServletRequest request = ServletActionContext.getRequest();
         String fileType = request.getParameter("fileType");
         System.out.println(fileType);
+        Netuser user = (Netuser) session.get("user");
+        String username = user.getUsername();
         //分类
-        List fileClassify  = selectDao.seleImage(fileType);
+        List fileClassify  = selectDao.seleImage(fileType,username);
         this.request.put("filetbls",fileClassify);
         return SUCCESS;
     }

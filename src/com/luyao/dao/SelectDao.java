@@ -10,10 +10,10 @@ import java.util.List;
 public class SelectDao {
     private SessionFactory sessionFactory;
 
-    public List<Filetbl> selectfile(String fileName) {
+    public List<Filetbl> selectfile(String fileName, String username) {
         Session session = sessionFactory.openSession();
-        String hql = "";
-        Query query = session.createQuery("from Filetbl  where filename like '%"+fileName+"%'");
+        Query query = session.createQuery("from Filetbl  where  filename like '%"+fileName+"%' and username=:username");
+        query.setParameter("username",username);
         List<Filetbl> list = query.list();
         System.out.println(list);
         return list;
@@ -22,12 +22,14 @@ public class SelectDao {
     /**
      * 分类查找
      * @param fileType
+     * @param username
      * @return
      */
-    public List seleImage(String fileType) {
+    public List seleImage(String fileType, String username) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Filetbl where sortname=:sortname");
+        Query query = session.createQuery("from Filetbl where sortname=:sortname and username=:username");
         query.setParameter("sortname",fileType);
+        query.setParameter("username",username);
         List list = query.list();
         return list;
     }

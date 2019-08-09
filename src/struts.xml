@@ -29,6 +29,11 @@
             <result name="input">index.jsp</result>
         </action>
 
+        <!--        退出登录-->
+        <action method="loginOut" name="loginOut" class="com.luyao.action.UserAction">
+            <result name="success" type="redirect">index.jsp</result>
+        </action>
+
         <!--        文件上传-->
         <action method="upload" name="upload" class="com.luyao.action.FileAction">
             <result name="success" type="redirectAction">fileList</result>

@@ -26,6 +26,11 @@ public class UserAction extends BaseAction implements ModelDriven<Netuser> {
     private HttpServletResponse response = ServletActionContext.getResponse();
 
 
+    public String loginOut(){
+        session.remove("user");
+        return SUCCESS;
+    }
+
     /**
      * 购买会员
      */
@@ -48,13 +53,10 @@ public class UserAction extends BaseAction implements ModelDriven<Netuser> {
      * 修改密码
      */
     public String changePas() {
-        System.out.println(user + "user=====================Action");
         int index = userService.changePas(user);
         if (index > 0) {
-            request.put("message", "密码修改成功请使用新密码登录");
             return SUCCESS;
         } else {
-            request.put("message", "密码修改失败，验证码错误");
             return INPUT;
         }
     }
@@ -89,12 +91,10 @@ public class UserAction extends BaseAction implements ModelDriven<Netuser> {
         Netuser netuser = userService.selectEmail(email);
 
         if (netuser == null) {
-            System.out.println("没有用户");
             SendMail send = new SendMail();
             send.sendAction("网盘邮箱验证码", code, email);
             session.put("AuthCode", code);
         } else {
-            System.out.println("有用户");
             String string = JSON.toJSONString("邮箱已被占用");
             response.setContentType("text/html;charset=UTF-8");
             response.getWriter().print(string);

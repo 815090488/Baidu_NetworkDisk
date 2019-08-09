@@ -249,6 +249,9 @@
             <span style="color: red;margin-left: 20px;">
                 ${sessionScope.message}
             </span>
+            <span style="color: black;margin-left: 20px;text-decoration: none">
+                <a href="/loginOut">退出登录</a>
+            </span>
         </dd>
     </div>
     <div class="layout">

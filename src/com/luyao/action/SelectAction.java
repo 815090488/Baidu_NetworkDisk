@@ -20,11 +20,9 @@ public class SelectAction extends BaseAction {
     public String selectFile(){
 //        selectFile
         String selectFile = requestSession.getParameter("selectFile");
-        System.out.println(selectFile+"------selectFile-----------  SelectAction-----");
         Netuser user = (Netuser) session.get("user");
         String username = user.getUsername();
         List<Filetbl> filetblList = selectDao.selectfile(selectFile,username);
-        System.out.println(filetblList+"list-------------selectList       --SelectAction----------------");
         request.put("filetbls",filetblList);
         return SUCCESS;
     }

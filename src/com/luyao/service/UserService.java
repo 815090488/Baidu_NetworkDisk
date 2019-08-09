@@ -26,7 +26,6 @@ public class UserService {
         String AuthCode = request.getParameter("AuthCode");
         String authCode = (String) request.getSession().getAttribute("AuthCode");
         if (AuthCode != null && AuthCode.equals(authCode)) {
-            System.out.println("注册成功");
             user.setUsertype(USERTYPE);
             user.setCapacity(CAPACITY);
             String password = user.getPassword();
@@ -61,7 +60,6 @@ public class UserService {
      */
     public Netuser selectEmail(String email) {
         Netuser netuser = userDao.selectEmail(email);
-        System.out.println(netuser + "-------------Service");
         return netuser;
     }
 
@@ -75,11 +73,9 @@ public class UserService {
         String AuthCode = request.getParameter("AuthCode");
         String authCode = (String) request.getSession().getAttribute("AuthCode");
         if (AuthCode != null && AuthCode.equals(authCode)) {
-            System.out.println("修改成功");
             int index=userDao.changePas(user);
             return 1;
         } else {
-            System.out.println("修改失败");
             return 0;
         }
     }

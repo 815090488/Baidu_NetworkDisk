@@ -46,10 +46,6 @@ public class FileAction extends BaseAction {
             Integer usertype = loginuser.getUsertype();
             long fileLength = FileUtil.calSize(file);
             Long capacity = (loginuser.getCapacity()) * 1024 * 1024;
-            System.out.println(loginuser.getCapacity() + "===========loginuser.getCapacity()==============");
-            System.out.println(capacity + "---------capacity       ACTION   FILE---------------");
-            System.out.println(fileLength + "----------fileLength-----------------");
-            System.out.println(capacity - fileLength + "-------------capacity - fileLength-----------------------");
             username = loginuser.getUsername();
             if (capacity - fileLength > 0) {
                 //普通用户
@@ -97,7 +93,6 @@ public class FileAction extends BaseAction {
         Long CApa = (capacity - fileLength) / (1024 * 1024);
         fileDao.UpdateCapacity(CApa, username);
         Netuser netuser = fileDao.seleUser(username);
-        System.out.println(netuser + "-----------netuser    ACtion-------------");
         session.put("user", netuser);
     }
 
@@ -136,11 +131,9 @@ public class FileAction extends BaseAction {
                 }
 
 
-                System.out.println("=======第一句=======" + FileUtil.getMD5(file[i]));
                 fileMd5 = FileUtil.getMD5(file[i]);
                 Srcfile result = fileDao.fileSeleMd5(fileMd5);
                 Filesort fileSort = fileDao.seleFileSort(fileType);
-                System.out.println(fileSort + "----------fileSort------------------");
                 if (result != null) {
                     System.out.println("实现秒传");
 
@@ -165,7 +158,6 @@ public class FileAction extends BaseAction {
 
 
                     Filetbl filetb = new Filetbl();
-                    System.out.println("-------FileAction-----   username-----------" + username);
                     filetb.setUsername(username);
                     filetb.setFilename(fileFileName[i]);
                     filetb.setUploadDate(new Timestamp(System.currentTimeMillis()));
@@ -175,7 +167,6 @@ public class FileAction extends BaseAction {
 
 
                     if (fileSort == null) {
-                        System.out.println("fileSort不存在+++++++++++++++++++++++++++");
                         Filesort filesort1 = new Filesort();
                         filesort1.setSortname(stortname[i]);
                         filesort1.setRemark(fileType);
@@ -183,7 +174,6 @@ public class FileAction extends BaseAction {
                         filetb.setSrcfileBySrcmd5(srcfile);
                         fileDao.saveFile(filesort1, srcfile, filetb);
                     } else {
-                        System.out.println("fileSort存在+++++++++++++++++++++++++++");
                         filetb.setSortid(fileSort.getSortid());
                         filetb.setSrcfileBySrcmd5(srcfile);
                         fileDao.saveFile(null, srcfile, filetb);

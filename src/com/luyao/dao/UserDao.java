@@ -50,7 +50,6 @@ public class UserDao {
         Query query = session.createQuery("from Netuser where email=:email");
         query.setParameter("email", email);
         Netuser netuser = (Netuser) query.uniqueResult();
-        System.out.println(netuser+"------------Dao");
         if(netuser==null){
             return null;
         }else {
@@ -74,7 +73,6 @@ public class UserDao {
         session.update(netuser);
         transaction.commit();
         session.close();
-        System.out.println("修改成功");
         return 1;
     }
 

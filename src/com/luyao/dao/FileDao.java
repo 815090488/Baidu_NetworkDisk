@@ -26,7 +26,6 @@ public class FileDao {
         Query query = session.createQuery("from Netuser where username=:username");
         query.setParameter("username", username);
         Netuser result = (Netuser) query.uniqueResult();
-        System.out.println(result + "----------filetbl    Dao--------");
         return result;
     }
 
@@ -96,7 +95,6 @@ public class FileDao {
         Query query = session.createQuery("from Filetbl where username=:username");
         query.setParameter("username", username);
         List filetbl = query.list();
-        System.out.println(filetbl + "----------filetbl    Dao--------");
         return filetbl;
     }
 
@@ -110,7 +108,6 @@ public class FileDao {
         Query query = session.createQuery("from Srcfile where filecode=:filecode");
         query.setParameter("filecode", filecode);
         Srcfile result = (Srcfile) query.uniqueResult();
-        System.out.println(result + "=-------result------------");
         return result;
     }
 

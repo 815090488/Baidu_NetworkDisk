@@ -33,6 +33,10 @@
         <action method="loginOut" name="loginOut" class="com.luyao.action.UserAction">
             <result name="success" type="redirect">index.jsp</result>
         </action>
+<!--        删除文件-->
+        <action method="deleteFile" name="deleteFile" class="com.luyao.action.SelectAction">
+            <result name="success" type="redirectAction">fileList</result>
+        </action>
 
         <!--        文件上传-->
         <action method="upload" name="upload" class="com.luyao.action.FileAction">
@@ -56,11 +60,11 @@
 <!--        修改密码邮箱验证-->
         <action method="changeAuthCode" name="changeAuthCode" class="com.luyao.action.UserAction"></action>
 
-
         <!--        文件下载-->
         <action name="fileList" class="com.luyao.action.FileAction" method="fileList">
             <result>upload.jsp</result>
         </action>
+
         <action name="down" class="com.luyao.action.FileAction" method="down">
             <!--输出流-->
             <result name="success" type="stream">

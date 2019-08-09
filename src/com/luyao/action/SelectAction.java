@@ -14,6 +14,16 @@ public class SelectAction extends BaseAction {
     private SelectDao selectDao;
     private HttpServletRequest requestSession = ServletActionContext.getRequest();
     private HttpServletResponse response = ServletActionContext.getResponse();
+
+    /**
+     * 文件删除
+     */
+    public String deleteFile(){
+        Integer fileid = Integer.parseInt(requestSession.getParameter("fileid"));
+        selectDao.deletFile(fileid);
+        return SUCCESS;
+    }
+
     /**
      * 文件搜索
      */

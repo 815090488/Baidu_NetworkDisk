@@ -300,8 +300,8 @@
                         <a style="text-decoration: none" href="down.action?filename=${filetbls.filepath}">
                             <span style="margin-left: 30px;margin-right: 30px">下载</span>
                         </a>
-                        <span style="font-size: 20px;line-height: 30px;color: black;">${filetbls.filename}</span><br>
-
+                        <span style="font-size: 20px;line-height: 30px;color: black;">${filetbls.filename}</span>
+                        <a href="deleteFile.action?fileid=${filetbls.fileId}"><span id="delete${filetbls.fileId}">删除</span></a><br>
                     </p>
                 </c:forEach>
             </div>

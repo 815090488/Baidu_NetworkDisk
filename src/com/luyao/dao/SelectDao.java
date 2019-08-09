@@ -3,12 +3,29 @@ package com.luyao.dao;
 import com.luyao.pojo.Filetbl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
 
 public class SelectDao {
     private SessionFactory sessionFactory;
+
+    /**
+     * 删除文件
+     * @param fileId
+     */
+    public void deletFile(Integer fileId) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("delete  from Filetbl WHERE fileId=:fileId");
+        query.setParameter("fileId",fileId);
+        int update = query.executeUpdate();
+        System.out.println(update);
+        transaction.commit();
+        session.close();
+        System.out.println("删除成功");
+    }
 
     public List<Filetbl> selectfile(String fileName, String username) {
         Session session = sessionFactory.openSession();

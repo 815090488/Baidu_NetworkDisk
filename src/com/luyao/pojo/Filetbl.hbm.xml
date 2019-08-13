@@ -32,14 +32,5 @@
         <property name="srcmd5">
             <column name="srcmd5" sql-type="char(32)" length="32"/>
         </property>
-        <!--        <many-to-one name="netuserByUsername" class="com.luyao.pojo.Netuser">-->
-        <!--            <column name="username"/>-->
-        <!--        </many-to-one>-->
-        <!--        <many-to-one name="srcfileBySrcmd5" class="com.luyao.pojo.Srcfile">-->
-        <!--            <column name="srcmd5"/>-->
-        <!--        </many-to-one>-->
-<!--        <many-to-one name="filesortBySortid" class="com.luyao.pojo.Filesort">-->
-        <!--            <column name="sortid" />-->
-        <!--        </many-to-one>-->
     </class>
 </hibernate-mapping>

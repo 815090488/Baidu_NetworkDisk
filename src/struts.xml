@@ -7,6 +7,14 @@
 <struts>
     <constant name="struts.multipart.maxSize" value="500000000"/>
     <package name="default" extends="struts-default">
+
+        <global-results>
+            <result name="error">error.jsp</result>
+        </global-results>
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error"></exception-mapping>
+        </global-exception-mappings>
+
         <!--        注册-->
         <action method="register" name="register" class="com.luyao.action.UserAction">
             <result name="success" type="redirect">index.jsp</result>

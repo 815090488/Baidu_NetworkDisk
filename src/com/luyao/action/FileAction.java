@@ -24,7 +24,6 @@ public class FileAction extends BaseAction {
     //文件上传成功后，入库
     // 入库：文件入库   用户文件记录入库   File[] upload
     //usertype 1:普通用户 2：普通会员 3、超级会员
-
     private File[] file;
     private String[] fileFileName;
     private String[] stortname = new String[10];
@@ -32,12 +31,11 @@ public class FileAction extends BaseAction {
     private String username;
     private String filename;
     private String fileMd5;
-
     private static final long USERFILESIZE = 1024 * 1024 * 10;//普通用户
     private static final long REGULARMEMBERS = 1024 * 1024 * 20;//普通会员
-
     /**
      * 文件上传
+     *
      * @return
      */
     public String upload() {
@@ -59,7 +57,6 @@ public class FileAction extends BaseAction {
                         } else {
                             throw new RuntimeException("空间不足");
                         }
-
                     }
                 } else if (usertype == 2) {
                     //普通会员
@@ -86,6 +83,7 @@ public class FileAction extends BaseAction {
 
     /**
      * 上传逻辑处理，将新的用户放入到session
+     *
      * @param fileLength
      * @param capacity
      */
@@ -104,21 +102,16 @@ public class FileAction extends BaseAction {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-
         try {
             for (int i = 0; i < file.length; i++) {
                 File saveFile = new File(Config.saveDir, FileUtil.getUnqiueByName(fileFileName[i]));
-
-
                 //filepath截取文件名字
                 String absolutePath = saveFile.getAbsolutePath();
                 String substring = absolutePath.substring(absolutePath.lastIndexOf("\\") + 1);
                 //文件类型
                 String fileType = fileFileName[i].substring(fileFileName[i].lastIndexOf(".") + 1);
-
-
                 if (fileType.equals("docx") || fileType.equals("doc") || fileType.equals("md")
-                        || fileType.equals("txt") || fileType.equals("pdf")|| fileType.equals("ppd")) {
+                        || fileType.equals("txt") || fileType.equals("pdf") || fileType.equals("ppd")) {
                     stortname[i] = "document";
                 } else if (fileType.equals("avi") || fileType.equals("mp4")) {
                     stortname[i] = "video";
@@ -129,25 +122,15 @@ public class FileAction extends BaseAction {
                 } else {
                     stortname[i] = "other";
                 }
-
-
                 fileMd5 = FileUtil.getMD5(file[i]);
                 Srcfile result = fileDao.fileSeleMd5(fileMd5);
                 Filesort fileSort = fileDao.seleFileSort(fileType);
                 if (result != null) {
                     System.out.println("实现秒传");
-
-                    Filetbl filetb = new Filetbl();
-                    filetb.setUsername(username);
-                    filetb.setFilename(fileFileName[i]);
-                    filetb.setUploadDate(new Timestamp(System.currentTimeMillis()));
-                    filetb.setFilepath(substring);
-                    filetb.setSortname(stortname[i]);
-                    filetb.setSrcmd5(fileMd5);
+                    Filetbl filetb = getFiletbl(i, substring);
                     filetb.setSortid(fileSort.getSortid());
                     fileDao.saveFile(null, null, filetb);
                 } else {
-
                     FileUtils.copyFile(file[i], saveFile);
                     //入库
                     Srcfile srcfile = new Srcfile();
@@ -155,30 +138,16 @@ public class FileAction extends BaseAction {
                     srcfile.setFilepath(substring);
                     srcfile.setUptime(new Timestamp(System.currentTimeMillis()));
                     srcfile.setAuthor(username);
-
-
-                    Filetbl filetb = new Filetbl();
-                    filetb.setUsername(username);
-                    filetb.setFilename(fileFileName[i]);
-                    filetb.setUploadDate(new Timestamp(System.currentTimeMillis()));
-                    filetb.setFilepath(substring);
-                    filetb.setSortname(stortname[i]);
-                    filetb.setSrcmd5(fileMd5);
-
-
+                    Filetbl filetb = getFiletbl(i, substring);
                     if (fileSort == null) {
                         Filesort filesort1 = new Filesort();
                         filesort1.setSortname(stortname[i]);
                         filesort1.setRemark(fileType);
-
-                        filetb.setSrcfileBySrcmd5(srcfile);
                         fileDao.saveFile(filesort1, srcfile, filetb);
                     } else {
                         filetb.setSortid(fileSort.getSortid());
-                        filetb.setSrcfileBySrcmd5(srcfile);
                         fileDao.saveFile(null, srcfile, filetb);
                     }
-
                 }
             }
         } catch (Exception e) {
@@ -187,9 +156,28 @@ public class FileAction extends BaseAction {
         return SUCCESS;
     }
 
+    /**
+     * 设置filetbl值
+     *
+     * @param i
+     * @param substring
+     * @return
+     */
+    private Filetbl getFiletbl(int i, String substring) {
+        Filetbl filetb = new Filetbl();
+        filetb.setUsername(username);
+        filetb.setFilename(fileFileName[i]);
+        filetb.setUploadDate(new Timestamp(System.currentTimeMillis()));
+        filetb.setFilepath(substring);
+        filetb.setSortname(stortname[i]);
+        filetb.setSrcmd5(fileMd5);
+        return filetb;
+    }
+
 
     /**
      * 根据用户名显示所用文件
+     *
      * @return
      */
     public String fileList() {

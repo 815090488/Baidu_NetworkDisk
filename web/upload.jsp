@@ -208,7 +208,7 @@
     <div class="header">
         <dd class="xjjb">
         <span class="xgs">
-            <a href="/index.jsp">首页</a>
+            <a href="/loginOut">首页</a>
         </span>
             <span class="xgs">
             <a href="javascript">网盘</a>

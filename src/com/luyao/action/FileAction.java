@@ -30,8 +30,10 @@ public class FileAction extends BaseAction {
     private String fileMd5;
     private double fileLengths;
     private double fileLength;
+    private Integer folderid;
     private static final long USERFILESIZE = 1024 * 1024 * 10;//普通用户
     private static final long REGULARMEMBERS = 1024 * 1024 * 20;//普通会员
+
     /**
      * 文件上传
      *
@@ -39,6 +41,7 @@ public class FileAction extends BaseAction {
      */
     public String upload() {
         Netuser loginuser = (Netuser) session.get("user");
+        folderid = (Integer) request.get("folderid");
         if (loginuser != null) {
             Integer usertype = loginuser.getUsertype();
             fileLengths = FileUtil.calSize(file);
@@ -82,8 +85,10 @@ public class FileAction extends BaseAction {
 
     /**
      * 上传逻辑处理，将新的用户放入到session
-     *  @param fileLengths
-     * @param capacity*/
+     *
+     * @param fileLengths
+     * @param capacity
+     */
     private void uploadManager(double fileLengths, double capacity) {
         double CApa = (capacity - fileLengths) / (1024 * 1024);
         fileDao.UpdateCapacity(CApa, username);
@@ -101,7 +106,7 @@ public class FileAction extends BaseAction {
         }
         try {
             for (int i = 0; i < file.length; i++) {
-                fileLength=file[i].length();
+                fileLength = file[i].length();
                 File saveFile = new File(Config.saveDir, FileUtil.getUnqiueByName(fileFileName[i]));
                 //filepath截取文件名字
                 String absolutePath = saveFile.getAbsolutePath();
@@ -169,7 +174,12 @@ public class FileAction extends BaseAction {
         filetb.setFilepath(substring);
         filetb.setSortname(stortname[i]);
         filetb.setSrcmd5(fileMd5);
-        double d = fileLength/(1024*1024);
+        if (folderid == null) {
+            filetb.setFolderid(0);
+        } else {
+            filetb.setFolderid(folderid);
+        }
+        double d = fileLength / (1024 * 1024);
         d = (double) Math.round(d * 100) / 100;
         filetb.setFilesize(d);
         return filetb;
@@ -183,9 +193,9 @@ public class FileAction extends BaseAction {
      */
     public String fileList() {
         Netuser user = (Netuser) session.get("user");
-        List filetbls = fileDao.seleFieName(user.getUsername());
-        List folders = fileDao.seleFolder(user.getUsername());
-        System.out.println(folders+"-----------------------------------------------------");
+        List filetbls = fileDao.seleFieName(0,user.getUsername());
+        List folders = fileDao.seleFolder(0,user.getUsername());
+        System.out.println(folders + "-----------------------------------------------------");
         request.put("filetbls", filetbls);
         request.put("folders", folders);
         return SUCCESS;
@@ -285,5 +295,13 @@ public class FileAction extends BaseAction {
 
     public void setFileLengths(double fileLengths) {
         this.fileLengths = fileLengths;
+    }
+
+    public Integer getFolderid() {
+        return folderid;
+    }
+
+    public void setFolderid(Integer folderid) {
+        this.folderid = folderid;
     }
 }

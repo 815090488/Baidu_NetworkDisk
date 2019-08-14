@@ -407,6 +407,7 @@
             </script>
         </div>
         <form method="post" action="upload.action" enctype="multipart/form-data">
+            <input type="hidden" name="folderid" value="${folder.folderid}">
             <div class="shadowBox" v-show="key">
                 <div class="box">
                     <div class="top">文件上传框</div>

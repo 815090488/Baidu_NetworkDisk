@@ -35,8 +35,8 @@ public class FolderService {
         return folder;
     }
 
-    public List<Filetbl> seleFieName(String username) {
-        List list = fileDao.seleFieName(username);
+    public List<Filetbl> seleFieName(Integer parentid, String username) {
+        List list = fileDao.seleFieName(parentid,username);
         return list;
     }
 

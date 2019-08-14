@@ -23,7 +23,7 @@
         <property name="filepath">
             <column name="filepath" sql-type="varchar(150)" length="150"/>
         </property>
-       <property name="sortid">
+        <property name="sortid">
             <column name="sortid" sql-type="int(11)"/>
         </property>
         <property name="sortname">

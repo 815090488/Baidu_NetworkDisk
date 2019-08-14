@@ -48,11 +48,11 @@ public class FolderAction extends BaseAction implements ModelDriven<Folder> {
         System.out.println(folderList + "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 
         Folder folder2 = folderService.seleById(folder.getParentid());
-//        List<Filetbl> filetbls = folderService.seleFieName(user.getUsername());
+        List<Filetbl> filetbls = folderService.seleFieName(folder.getParentid(),user.getUsername());
 
         request.put("folders", folderList);
         request.put("folder", folder2);
-//        request.put("filetbls", filetbls);
+        request.put("filetbls", filetbls);
         return SUCCESS;
     }
 

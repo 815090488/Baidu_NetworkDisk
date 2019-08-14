@@ -17,13 +17,16 @@ public class FileDao {
 
     /**
      * 根据用户查询文件夹
+     *
+     * @param i
      * @param username
      * @return
      */
-    public List seleFolder(String username) {
+    public List seleFolder(Integer parentid, String username) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Folder where username=:username");
+        Query query = session.createQuery("from Folder where username=:username and parentid=:parentid");
         query.setParameter("username", username);
+        query.setParameter("parentid", parentid);
         List folders = query.list();
         return folders;
     }
@@ -101,10 +104,11 @@ public class FileDao {
      * @param username
      * @return
      */
-    public List seleFieName(String username) {
+    public List seleFieName(Integer folderid,String username) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Filetbl where username=:username");
+        Query query = session.createQuery("from Filetbl where username=:username and folderid=:folderid");
         query.setParameter("username", username);
+        query.setParameter("folderid", folderid);
         List filetbl = query.list();
         return filetbl;
     }

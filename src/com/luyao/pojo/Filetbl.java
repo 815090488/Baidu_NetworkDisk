@@ -16,6 +16,15 @@ public class Filetbl {
     private String sortname;
     private String srcmd5;
     private Double filesize;
+    private Integer folderid;
+
+    public Integer getFolderid() {
+        return folderid;
+    }
+
+    public void setFolderid(Integer folderid) {
+        this.folderid = folderid;
+    }
 
     public Double getFilesize() {
         return filesize;

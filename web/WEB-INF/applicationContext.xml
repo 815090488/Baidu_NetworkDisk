@@ -58,6 +58,8 @@
     </bean>
     <bean id="folderService" class="com.luyao.service.FolderService">
         <property name="folderDao" ref="folderDao"/>
+        <property name="fileDao" ref="fileDao"/>
     </bean>
+
 
 </beans>

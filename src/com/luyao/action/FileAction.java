@@ -1,10 +1,7 @@
 package com.luyao.action;
 
 import com.luyao.dao.FileDao;
-import com.luyao.pojo.Filesort;
-import com.luyao.pojo.Filetbl;
-import com.luyao.pojo.Netuser;
-import com.luyao.pojo.Srcfile;
+import com.luyao.pojo.*;
 import com.luyao.util.Config;
 import com.luyao.util.FileUtil;
 import org.apache.commons.io.FileUtils;

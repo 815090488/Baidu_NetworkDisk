@@ -35,5 +35,8 @@
         <property name="filesize">
             <column name="filesize" sql-type="double"/>
         </property>
+        <property name="folderid">
+            <column name="folderid" sql-type="int(11)"/>
+        </property>
     </class>
 </hibernate-mapping>

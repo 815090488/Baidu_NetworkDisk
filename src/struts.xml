@@ -76,6 +76,12 @@
         <!--创建文件夹-->
         <action method="createFolder" name="createFolder" class="com.luyao.action.FolderAction"></action>
 
+        <!--查找文件夹-->
+        <action method="seleFolderByName" name="seleFolderByName" class="com.luyao.action.FolderAction">
+            <result name="success">upload.jsp</result>
+        </action>
+
+
         <action name="down" class="com.luyao.action.FileAction" method="down">
             <!--输出流-->
             <result name="success" type="stream">

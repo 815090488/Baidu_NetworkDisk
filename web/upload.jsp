@@ -318,7 +318,11 @@
 
                 <c:forEach var="folders" items="${folders}">
                     <tr>
-                        <td>${folders.foldername}</td>
+                        <td>
+                            <a href="seleFolderByName.action?parentid=${folders.folderid}">
+                                <span> ${folders.foldername}</span>
+                            </a>
+                        </td>
                         <td>-</td>
                         <td>${folders.createTime}</td>
                         <td>-</td>
@@ -345,6 +349,8 @@
             </table>
             <script type="text/javascript">
                 $(document).ready(function () {
+
+                    var folderid = "${folder.folderid}";
                     //第一行隐藏
                     $("#addrow").hide();
                     //给新建按钮添加点击事件
@@ -360,7 +366,8 @@
                             type: "POST",
                             url: "/createFolder.action",
                             data: {
-                                foldername: foldername
+                                foldername: foldername,
+                                folderid: folderid
                             },
                             success: function (string) {
                                 if (string == "true") {
@@ -378,7 +385,7 @@
                                     tr.append(td3);
                                     //把行追加到表格
                                     $("table tbody").append(tr);
-                                    $("addrow").after(tr);
+                                    $("#addrow").after(tr);
                                     //输入框隐藏 并且清空处理
                                     $("#folderName").val("");
                                     $("#addrow").hide();

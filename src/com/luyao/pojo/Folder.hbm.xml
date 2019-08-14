@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.luyao.pojo.Folder" table="folder" schema="sshbaidu">
+        <id name="folderid">
+            <column name="folderid" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="foldername">
+            <column name="foldername" sql-type="varchar(100)" length="100" />
+        </property>
+        <property name="parentid">
+            <column name="parentid" sql-type="int(11)" />
+        </property>
+        <property name="createTime">
+            <column name="createTime" sql-type="date" />
+        </property>
+        <property name="username">
+            <column name="username" sql-type="varchar(50)" />
+        </property>
+    </class>
+</hibernate-mapping>

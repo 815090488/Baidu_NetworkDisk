@@ -21,7 +21,7 @@
             <column name="activeCode" sql-type="varchar(32)" length="32" />
         </property>
         <property name="capacity">
-            <column name="capacity" sql-type="bigint(255)" />
+            <column name="capacity" sql-type="double(255)" />
         </property>
     </class>
 </hibernate-mapping>

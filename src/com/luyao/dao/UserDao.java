@@ -93,7 +93,7 @@ public class UserDao {
             System.out.println("请勿重复购买会员");
             return netuser;
         }else{
-            Long capacity = user.getCapacity();
+            double capacity = user.getCapacity();
             netuser.setUsertype(2);
             netuser.setCapacity(capacity+1024);
             session.update(netuser);

@@ -275,7 +275,7 @@
                     </button>
                 </li>
                 <li>
-                    <button class="dd" type="text">新建文件夹</button>
+                    <button class="dd" value="新建文件夹" type="text">新建文件夹</button>
                 </li>
                 <li>
                     <button class="dd" type="text">离线下载</button>
@@ -294,17 +294,110 @@
                     </div>
                 </form>
             </ul>
-            <div>
-                <c:forEach var="filetbls" items="${filetbls}">
-                    <p>
-                        <a style="text-decoration: none" href="down.action?filename=${filetbls.filepath}">
-                            <span style="margin-left: 30px;margin-right: 30px">下载</span>
-                        </a>
-                        <span style="font-size: 20px;line-height: 30px;color: black;">${filetbls.filename}</span>
-                        <a href="deleteFile.action?fileid=${filetbls.fileId}"><span id="delete${filetbls.fileId}">删除</span></a><br>
-                    </p>
+
+
+            <table width="95%" align="center">
+                <thead>
+                <tr>
+                    <td width="10%">文件名</td>
+                    <td width="10%">大小</td>
+                    <td width="10%">创建时间</td>
+                    <td width="10%">删除</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="addrow">
+                    <td>
+                        <input id="folderName" value="新建文件夹">
+                        <input type="button" value="OK">
+                        <input type="button" value="DEL">
+                    </td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+
+                <c:forEach var="folders" items="${folders}">
+                    <tr>
+                        <td>${folders.foldername}</td>
+                        <td>-</td>
+                        <td>${folders.createTime}</td>
+                        <td>-</td>
+                    </tr>
                 </c:forEach>
-            </div>
+
+
+                <c:forEach var="filetbls" items="${filetbls}">
+                    <tr>
+                        <td>
+                            <a style="text-decoration: none" href="down.action?filename=${filetbls.filepath}">
+                                <span>${filetbls.filename}</span>
+                            </a>
+                        </td>
+                        <td>${filetbls.filesize} M</td>
+                        <td>${filetbls.uploadDate}</td>
+                        <td>
+                            <a href="deleteFile.action?fileid=${filetbls.fileId}"><span
+                                    id="delete${filetbls.fileId}">删除</span></a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    //第一行隐藏
+                    $("#addrow").hide();
+                    //给新建按钮添加点击事件
+                    $("[value=新建文件夹]").click(function () {
+                        $("#addrow").show();
+                    });
+
+                    //给ok按钮添加点击事件
+                    $("[value=OK]").click(function () {
+                        //获取文件名
+                        var foldername = $("#folderName").val();
+                        $.ajax({
+                            type: "POST",
+                            url: "/createFolder.action",
+                            data: {
+                                foldername: foldername
+                            },
+                            success: function (string) {
+                                if (string == "true") {
+                                    //动态插入一行
+                                    var tr = $("<tr>");//<tr></tr>
+                                    var td1 = $("<td>");//<td></td>
+                                    var td2 = $("<td>");
+                                    var td3 = $("<td>");
+                                    td1.html(foldername);//<td>wwww</td>
+                                    td2.html("-");
+                                    td3.html("-");
+                                    //把单元格追加到tr中
+                                    tr.append(td1);
+                                    tr.append(td2);
+                                    tr.append(td3);
+                                    //把行追加到表格
+                                    $("table tbody").append(tr);
+                                    $("addrow").after(tr);
+                                    //输入框隐藏 并且清空处理
+                                    $("#folderName").val("");
+                                    $("#addrow").hide();
+                                    alert("创建成功！");
+                                } else {
+                                    alert("创建失败！");
+                                }
+                            },
+                            dataType: "json"
+                        });
+
+                    });
+
+                    $("[value=DEL]").click(function () {
+                        $("#addrow").hide();
+                    });
+                });
+
+            </script>
         </div>
         <form method="post" action="upload.action" enctype="multipart/form-data">
             <div class="shadowBox" v-show="key">

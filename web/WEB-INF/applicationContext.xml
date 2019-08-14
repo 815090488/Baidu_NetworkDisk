@@ -24,6 +24,7 @@
                 <value>com/luyao/pojo/Filetbl.hbm.xml</value>
                 <value>com/luyao/pojo/Netuser.hbm.xml</value>
                 <value>com/luyao/pojo/Srcfile.hbm.xml</value>
+                <value>com/luyao/pojo/Folder.hbm.xml</value>
             </list>
         </property>
         <property name="annotatedClasses">
@@ -32,6 +33,7 @@
                 <value>com.luyao.pojo.Filetbl</value>
                 <value>com.luyao.pojo.Netuser</value>
                 <value>com.luyao.pojo.Srcfile</value>
+                <value>com.luyao.pojo.Folder</value>
             </list>
         </property>
     </bean>
@@ -46,10 +48,16 @@
     <bean id="selectDao" class="com.luyao.dao.SelectDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <bean id="folderDao" class="com.luyao.dao.FolderDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
     <!--Service-->
     <bean id="userService" class="com.luyao.service.UserService">
         <property name="userDao" ref="userDao"/>
+    </bean>
+    <bean id="folderService" class="com.luyao.service.FolderService">
+        <property name="folderDao" ref="folderDao"/>
     </bean>
 
 </beans>

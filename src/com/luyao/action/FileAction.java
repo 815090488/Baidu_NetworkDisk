@@ -31,6 +31,8 @@ public class FileAction extends BaseAction {
     private String username;
     private String filename;
     private String fileMd5;
+    private double fileLengths;
+    private double fileLength;
     private static final long USERFILESIZE = 1024 * 1024 * 10;//普通用户
     private static final long REGULARMEMBERS = 1024 * 1024 * 20;//普通会员
     /**
@@ -42,33 +44,33 @@ public class FileAction extends BaseAction {
         Netuser loginuser = (Netuser) session.get("user");
         if (loginuser != null) {
             Integer usertype = loginuser.getUsertype();
-            long fileLength = FileUtil.calSize(file);
-            Long capacity = (loginuser.getCapacity()) * 1024 * 1024;
+            fileLengths = FileUtil.calSize(file);
+            double capacity = (loginuser.getCapacity()) * 1024 * 1024;
             username = loginuser.getUsername();
-            if (capacity - fileLength > 0) {
+            if (capacity - fileLengths > 0) {
                 //普通用户
                 if (usertype == 1) {
-                    if (fileLength > USERFILESIZE) {
+                    if (fileLengths > USERFILESIZE) {
                         throw new RuntimeException("文件超出上传范围，请充会员");
                     } else {
                         if (capacity > 0) {
                             fileUpload();
-                            uploadManager(fileLength, capacity);
+                            uploadManager(fileLengths, capacity);
                         } else {
                             throw new RuntimeException("空间不足");
                         }
                     }
                 } else if (usertype == 2) {
                     //普通会员
-                    if (fileLength > REGULARMEMBERS) {
+                    if (fileLengths > REGULARMEMBERS) {
                         throw new RuntimeException("文件超出上传范围，请充超级会员");
                     } else {
                         fileUpload();
-                        uploadManager(fileLength, capacity);
+                        uploadManager(fileLengths, capacity);
                     }
                 } else if (usertype == 3) {
                     fileUpload();
-                    uploadManager(fileLength, capacity);
+                    uploadManager(fileLengths, capacity);
                 }
                 return SUCCESS;
             } else {
@@ -83,12 +85,10 @@ public class FileAction extends BaseAction {
 
     /**
      * 上传逻辑处理，将新的用户放入到session
-     *
-     * @param fileLength
-     * @param capacity
-     */
-    private void uploadManager(long fileLength, Long capacity) {
-        Long CApa = (capacity - fileLength) / (1024 * 1024);
+     *  @param fileLengths
+     * @param capacity*/
+    private void uploadManager(double fileLengths, double capacity) {
+        double CApa = (capacity - fileLengths) / (1024 * 1024);
         fileDao.UpdateCapacity(CApa, username);
         Netuser netuser = fileDao.seleUser(username);
         session.put("user", netuser);
@@ -104,6 +104,7 @@ public class FileAction extends BaseAction {
         }
         try {
             for (int i = 0; i < file.length; i++) {
+                fileLength=file[i].length();
                 File saveFile = new File(Config.saveDir, FileUtil.getUnqiueByName(fileFileName[i]));
                 //filepath截取文件名字
                 String absolutePath = saveFile.getAbsolutePath();
@@ -171,6 +172,9 @@ public class FileAction extends BaseAction {
         filetb.setFilepath(substring);
         filetb.setSortname(stortname[i]);
         filetb.setSrcmd5(fileMd5);
+        double d = fileLength/(1024*1024);
+        d = (double) Math.round(d * 100) / 100;
+        filetb.setFilesize(d);
         return filetb;
     }
 
@@ -183,7 +187,10 @@ public class FileAction extends BaseAction {
     public String fileList() {
         Netuser user = (Netuser) session.get("user");
         List filetbls = fileDao.seleFieName(user.getUsername());
+        List folders = fileDao.seleFolder(user.getUsername());
+        System.out.println(folders+"-----------------------------------------------------");
         request.put("filetbls", filetbls);
+        request.put("folders", folders);
         return SUCCESS;
     }
 
@@ -265,5 +272,21 @@ public class FileAction extends BaseAction {
 
     public void setFileMd5(String fileMd5) {
         this.fileMd5 = fileMd5;
+    }
+
+    public double getFileLength() {
+        return fileLengths;
+    }
+
+    public void setFileLength(double fileLengths) {
+        this.fileLengths = fileLengths;
+    }
+
+    public double getFileLengths() {
+        return fileLengths;
+    }
+
+    public void setFileLengths(double fileLengths) {
+        this.fileLengths = fileLengths;
     }
 }

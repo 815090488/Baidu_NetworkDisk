@@ -15,7 +15,18 @@ import java.util.List;
 public class FileDao {
     private SessionFactory sessionFactory;
 
-
+    /**
+     * 根据用户查询文件夹
+     * @param username
+     * @return
+     */
+    public List seleFolder(String username) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from Folder where username=:username");
+        query.setParameter("username", username);
+        List folders = query.list();
+        return folders;
+    }
     /**
      * 查询用户
      * @param username
@@ -47,7 +58,7 @@ public class FileDao {
      * @param capacity
      * @param username
      */
-    public void UpdateCapacity(Long capacity, String username) {
+    public void UpdateCapacity(double capacity, String username) {
 
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -118,7 +129,5 @@ public class FileDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
-
 
 }

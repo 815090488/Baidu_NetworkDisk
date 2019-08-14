@@ -32,5 +32,8 @@
         <property name="srcmd5">
             <column name="srcmd5" sql-type="char(32)" length="32"/>
         </property>
+        <property name="filesize">
+            <column name="filesize" sql-type="double"/>
+        </property>
     </class>
 </hibernate-mapping>

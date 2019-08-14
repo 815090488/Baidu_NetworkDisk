@@ -15,9 +15,15 @@ public class Filetbl {
     private Integer sortid;
     private String sortname;
     private String srcmd5;
-    private Netuser netuserByUsername;
-    private Filesort filesortBySortid;
-    private Srcfile srcfileBySrcmd5;
+    private Double filesize;
+
+    public Double getFilesize() {
+        return filesize;
+    }
+
+    public void setFilesize(Double filesize) {
+        this.filesize = filesize;
+    }
 
     @Id
     @Column(name = "fileId", nullable = false)
@@ -130,33 +136,4 @@ public class Filetbl {
         return Objects.hash(fileId, filename, username, uploadDate, downcode, filepath, sortid, sortname, srcmd5);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "username", referencedColumnName = "username")
-    public Netuser getNetuserByUsername() {
-        return netuserByUsername;
-    }
-
-    public void setNetuserByUsername(Netuser netuserByUsername) {
-        this.netuserByUsername = netuserByUsername;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "sortid", referencedColumnName = "sortid")
-    public Filesort getFilesortBySortid() {
-        return filesortBySortid;
-    }
-
-    public void setFilesortBySortid(Filesort filesortBySortid) {
-        this.filesortBySortid = filesortBySortid;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "srcmd5", referencedColumnName = "filecode", nullable = false)
-    public Srcfile getSrcfileBySrcmd5() {
-        return srcfileBySrcmd5;
-    }
-
-    public void setSrcfileBySrcmd5(Srcfile srcfileBySrcmd5) {
-        this.srcfileBySrcmd5 = srcfileBySrcmd5;
-    }
 }

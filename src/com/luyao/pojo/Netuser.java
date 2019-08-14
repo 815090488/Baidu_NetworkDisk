@@ -13,7 +13,7 @@ public class Netuser {
     private Integer usertype;
     private String email;
     private String activeCode;
-    private Long capacity;
+    private double capacity;
 
     @Override
     public String toString() {
@@ -79,11 +79,11 @@ public class Netuser {
 
     @Basic
     @Column(name = "capacity", nullable = true)
-    public Long getCapacity() {
+    public double getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(Long capacity) {
+    public void setCapacity(double capacity) {
         this.capacity = capacity;
     }
 

@@ -1,6 +1,5 @@
 package com.luyao.action;
 
-import com.luyao.dao.FileDao;
 import com.luyao.dao.SelectDao;
 import com.luyao.pojo.Filetbl;
 import com.luyao.pojo.Netuser;

@@ -1,7 +1,6 @@
 package com.luyao.action;
 
 import com.alibaba.fastjson.JSON;
-import com.luyao.dao.FileDao;
 import com.luyao.pojo.Filetbl;
 import com.luyao.pojo.Folder;
 import com.luyao.pojo.Netuser;
@@ -45,7 +44,6 @@ public class FolderAction extends BaseAction implements ModelDriven<Folder> {
     public String seleFolderByName() {
         Netuser user = (Netuser) session.get("user");
         List<Folder> folderList = folderService.seleByIdandName(folder.getParentid(), user.getUsername());
-        System.out.println(folderList + "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 
         Folder folder2 = folderService.seleById(folder.getParentid());
         List<Filetbl> filetbls = folderService.seleFieName(folder.getParentid(),user.getUsername());

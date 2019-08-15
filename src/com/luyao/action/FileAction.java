@@ -1,7 +1,12 @@
 package com.luyao.action;
 
+import com.luyao.ExceptionEnum.CustomizeException;
+import com.luyao.ExceptionEnum.ExceptionCode;
 import com.luyao.dao.FileDao;
-import com.luyao.pojo.*;
+import com.luyao.pojo.Filesort;
+import com.luyao.pojo.Filetbl;
+import com.luyao.pojo.Netuser;
+import com.luyao.pojo.Srcfile;
 import com.luyao.util.Config;
 import com.luyao.util.FileUtil;
 import org.apache.commons.io.FileUtils;
@@ -51,19 +56,19 @@ public class FileAction extends BaseAction {
                 //普通用户
                 if (usertype == 1) {
                     if (fileLengths > USERFILESIZE) {
-                        throw new RuntimeException("文件超出上传范围，请充会员");
+                        throw new CustomizeException(ExceptionCode.FILE_OUT_OF_RANGE_VIP);
                     } else {
                         if (capacity > 0) {
                             fileUpload();
                             uploadManager(fileLengths, capacity);
                         } else {
-                            throw new RuntimeException("空间不足");
+                            throw new CustomizeException(ExceptionCode.SPACE_IS_NOT_ENOUGH);
                         }
                     }
                 } else if (usertype == 2) {
                     //普通会员
                     if (fileLengths > REGULARMEMBERS) {
-                        throw new RuntimeException("文件超出上传范围，请充超级会员");
+                        throw new CustomizeException(ExceptionCode.FILE_OUT_OF_RANGE_SUPVIP);
                     } else {
                         fileUpload();
                         uploadManager(fileLengths, capacity);
@@ -74,7 +79,7 @@ public class FileAction extends BaseAction {
                 }
                 return SUCCESS;
             } else {
-                throw new RuntimeException("内存剩余空间不足");
+                throw new CustomizeException(ExceptionCode.SPACE_IS_NOT_ENOUGH);
             }
         } else {
             request.put("message", "未登录");
@@ -192,8 +197,8 @@ public class FileAction extends BaseAction {
      */
     public String fileList() {
         Netuser user = (Netuser) session.get("user");
-        List filetbls = fileDao.seleFieName(0,user.getUsername());
-        List folders = fileDao.seleFolder(0,user.getUsername());
+        List filetbls = fileDao.seleFieName(0, user.getUsername());
+        List folders = fileDao.seleFolder(0, user.getUsername());
         System.out.println(folders + "-----------------------------------------------------");
         request.put("filetbls", filetbls);
         request.put("folders", folders);
@@ -207,7 +212,7 @@ public class FileAction extends BaseAction {
     public InputStream getMyInput() {
         File file = new File(Config.saveDir, filename);
         if (file.exists() == false) {
-            throw new RuntimeException("文件不存在！");
+            throw new CustomizeException(ExceptionCode.FILE_DOES_NOT_EXIST);
         }
         InputStream inputStream = null;
         try {

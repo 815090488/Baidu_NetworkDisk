@@ -33,10 +33,7 @@ public class UserDao {
      * @return
      */
     public Netuser Login(String email) {
-        Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Netuser where email=:email");
-        query.setParameter("email", email);
-        Netuser user = (Netuser) query.uniqueResult();
+        Netuser user = getNetuserByemail(email);
         return user;
     }
 
@@ -46,16 +43,27 @@ public class UserDao {
      * @return
      */
     public Netuser selectEmail(String email) {
+        Netuser user = getNetuserByemail(email);
+        if(user==null){
+            return null;
+        }else {
+            return user;
+        }
+    }
+
+
+    /**
+     * 根据邮箱查找用户
+     * @param email
+     * @return
+     */
+    private Netuser getNetuserByemail(String email) {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("from Netuser where email=:email");
         query.setParameter("email", email);
-        Netuser netuser = (Netuser) query.uniqueResult();
-        if(netuser==null){
-            return null;
-        }else {
-            return netuser;
-        }
+        return (Netuser) query.uniqueResult();
     }
+
 
     /**
      * 修改密码
@@ -83,18 +91,45 @@ public class UserDao {
     public Netuser buyVIP(Netuser user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        System.out.println(user+"user+++++++++++++++++++UserDao++++++++++++++++");
         String email = user.getEmail();
         Query query = session.createQuery("from Netuser where email=:email");
         query.setParameter("email", email);
         Netuser netuser = (Netuser) query.uniqueResult();
 
-        if (netuser.getUsertype()==2){
+        if (netuser.getUsertype()==2 || netuser.getUsertype()==3){
             System.out.println("请勿重复购买会员");
             return netuser;
         }else{
             double capacity = user.getCapacity();
             netuser.setUsertype(2);
+            netuser.setCapacity(capacity+1024);
+            session.update(netuser);
+            transaction.commit();
+            Netuser userVIP = session.get(Netuser.class, user.getUsername());
+            System.out.println("会员修改成功");
+            return userVIP;
+        }
+    }
+
+    /**
+     * 购买超级会员
+     * @param user
+     * @return
+     */
+    public Netuser buySupVip(Netuser user) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        String email = user.getEmail();
+        Query query = session.createQuery("from Netuser where email=:email");
+        query.setParameter("email", email);
+        Netuser netuser = (Netuser) query.uniqueResult();
+
+        if (netuser.getUsertype()==3){
+            System.out.println("请勿重复购买超级会员");
+            return netuser;
+        }else{
+            double capacity = user.getCapacity();
+            netuser.setUsertype(3);
             netuser.setCapacity(capacity+1024);
             session.update(netuser);
             transaction.commit();

@@ -32,6 +32,24 @@ public class UserAction extends BaseAction implements ModelDriven<Netuser> {
     }
 
     /**
+     * 购买超级会员
+     */
+    public String buySupVip(){
+        Netuser user = (Netuser) session.get("user");
+        Netuser userVIP = userService.buySupVip(user);
+        if(user.equals(userVIP)){
+            session.put("message","请勿重复购买超级会员会员");
+            return SUCCESS;
+        }else{
+            session.put("user",userVIP);
+            return SUCCESS;
+        }
+    }
+
+
+
+
+    /**
      * 购买会员
      */
     public String buyVIP(){
@@ -40,10 +58,8 @@ public class UserAction extends BaseAction implements ModelDriven<Netuser> {
 
         if(user.equals(userVIP)){
             session.put("message","请勿重复购买会员");
-            System.out.println("请勿重复购买会员------------------Service------------");
             return SUCCESS;
         }else{
-            System.out.println("购买成功------------Service----------------");
             session.put("user",userVIP);
             return SUCCESS;
         }

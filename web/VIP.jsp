@@ -11,6 +11,7 @@
     <title>购买会员</title>
 </head>
 <body>
-<span><a href="/buyVIP">购买会员</a></span>
+<span><a href="/buyVIP">购买会员</a></span><br>
+<span><a href="/buySupVip">购买超级会员</a></span>
 </body>
 </html>

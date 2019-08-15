@@ -88,4 +88,12 @@ public class UserService {
         Netuser userVIP = userDao.buyVIP(user);
         return userVIP;
     }
+    /**
+     * 购买超级会员
+     * @param user
+     */
+    public Netuser buySupVip(Netuser user) {
+        Netuser userVIP = userDao.buySupVip(user);
+        return userVIP;
+    }
 }

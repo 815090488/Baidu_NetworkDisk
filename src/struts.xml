@@ -48,7 +48,7 @@
 
         <!--        文件上传-->
         <action method="upload" name="upload" class="com.luyao.action.FileAction">
-            <result name="success" type="redirectAction">fileList</result>
+            <result name="success" type="redirectAction">seleFolderByName?parentid=${folderid}</result>
             <result name="input" type="redirect">index.jsp</result>
         </action>
 

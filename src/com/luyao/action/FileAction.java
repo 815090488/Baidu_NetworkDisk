@@ -99,7 +99,7 @@ public class FileAction extends BaseAction {
     /**
      * 文件上传
      */
-    private String fileUpload() {
+    private void fileUpload() {
         File dir = new File(Config.saveDir);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -156,7 +156,6 @@ public class FileAction extends BaseAction {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return SUCCESS;
     }
 
     /**

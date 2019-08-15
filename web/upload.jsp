@@ -319,7 +319,8 @@
                 <c:forEach var="folders" items="${folders}">
                     <tr>
                         <td>
-                            <a href="seleFolderByName.action?parentid=${folders.folderid}">
+                            <img src="/img/1.jpg" style="width: 15px;height: 20px;margin-top: 20px;">
+                            <a style="text-decoration: none; color: black;"  href="seleFolderByName.action?parentid=${folders.folderid}">
                                 <span> ${folders.foldername}</span>
                             </a>
                         </td>

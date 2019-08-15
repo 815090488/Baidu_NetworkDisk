@@ -43,8 +43,8 @@ public class FolderAction extends BaseAction implements ModelDriven<Folder> {
      */
     public String seleFolderByName() {
         Netuser user = (Netuser) session.get("user");
-        List<Folder> folderList = folderService.seleByIdandName(folder.getParentid(), user.getUsername());
-
+        Integer parentid = folder.getParentid();
+        List<Folder> folderList = folderService.seleByIdandName(parentid, user.getUsername());
         Folder folder2 = folderService.seleById(folder.getParentid());
         List<Filetbl> filetbls = folderService.seleFieName(folder.getParentid(),user.getUsername());
 

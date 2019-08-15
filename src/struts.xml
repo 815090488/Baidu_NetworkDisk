@@ -27,18 +27,18 @@
         </action>
         <!--        购买会员-->
         <action method="buyVIP" name="buyVIP" class="com.luyao.action.UserAction">
-            <result name="success" type="redirectAction">fileList</result>
+            <result name="success" type="redirectAction">seleFolderByName?parentid=0</result>
             <result name="input">VIP.jsp</result>
         </action>
 <!--        购买超级会员-->
         <action method="buySupVip" name="buySupVip" class="com.luyao.action.UserAction">
-            <result name="success" type="redirectAction">fileList</result>
+            <result name="success" type="redirectAction">seleFolderByName?parentid=0</result>
             <result name="input">VIP.jsp</result>
         </action>
         <!--        登录-->
         <action method="Login" name="Login" class="com.luyao.action.UserAction">
             <!--redirect重定向  地址栏改变    请求转发：forword 一次请求，地址栏不变-->
-            <result name="success" type="redirectAction">fileList</result>
+            <result name="success" type="redirectAction">seleFolderByName?parentid=0</result>
             <result name="input">index.jsp</result>
         </action>
 
@@ -48,7 +48,7 @@
         </action>
         <!--        删除文件-->
         <action method="deleteFile" name="deleteFile" class="com.luyao.action.SelectAction">
-            <result name="success" type="redirectAction">fileList</result>
+            <result name="success" type="redirectAction">seleFolderByName?parentid=0</result>
         </action>
 
         <!--        文件上传-->

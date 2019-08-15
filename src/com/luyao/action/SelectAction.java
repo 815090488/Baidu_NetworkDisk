@@ -11,14 +11,15 @@ import java.util.List;
 
 public class SelectAction extends BaseAction {
     private SelectDao selectDao;
+    private Integer folderid;
     private HttpServletRequest requestSession = ServletActionContext.getRequest();
-    private HttpServletResponse response = ServletActionContext.getResponse();
 
     /**
      * 文件删除
      */
     public String deleteFile(){
         Integer fileid = Integer.parseInt(requestSession.getParameter("fileid"));
+        folderid = Integer.parseInt(requestSession.getParameter("folderid"));
         selectDao.deletFile(fileid);
         return SUCCESS;
     }
@@ -58,5 +59,13 @@ public class SelectAction extends BaseAction {
 
     public void setSelectDao(SelectDao selectDao) {
         this.selectDao = selectDao;
+    }
+
+    public Integer getFolderid() {
+        return folderid;
+    }
+
+    public void setFolderid(Integer folderid) {
+        this.folderid = folderid;
     }
 }

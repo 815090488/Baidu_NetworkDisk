@@ -341,7 +341,7 @@
                         <td>${filetbls.filesize} M</td>
                         <td>${filetbls.uploadDate}</td>
                         <td>
-                            <a href="deleteFile.action?fileid=${filetbls.fileId}"><span
+                            <a href="deleteFile.action?fileid=${filetbls.fileId}&folderid=${folder.folderid}"><span
                                     id="delete${filetbls.fileId}">删除</span></a>
                         </td>
                     </tr>

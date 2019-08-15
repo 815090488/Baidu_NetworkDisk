@@ -12,6 +12,21 @@ public class SelectDao {
     private SessionFactory sessionFactory;
 
     /**
+     * 删除文件夹
+     * @param folderid
+     */
+    public void deleteFold(Integer folderid) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("delete  from Folder WHERE folderid=:folderid");
+        query.setParameter("folderid",folderid);
+        int update = query.executeUpdate();
+        System.out.println(update);
+        transaction.commit();
+        session.close();
+        System.out.println("删除文件夹成功");
+    }
+    /**
      * 删除文件
      * @param fileId
      */
@@ -51,6 +66,8 @@ public class SelectDao {
         return list;
     }
 
+
+
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -58,5 +75,6 @@ public class SelectDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
 
 }

@@ -6,7 +6,6 @@ import com.luyao.pojo.Netuser;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class SelectAction extends BaseAction {
@@ -14,12 +13,24 @@ public class SelectAction extends BaseAction {
     private Integer folderid;
     private HttpServletRequest requestSession = ServletActionContext.getRequest();
 
+
+    /**
+     * 文件夹删除
+     */
+    public String deleteFold(){
+        Integer fileid = Integer.parseInt(requestSession.getParameter("folderid"));
+        folderid = Integer.parseInt(requestSession.getParameter("parentid"));
+        selectDao.deleteFold(fileid);
+        return SUCCESS;
+    }
+
+
     /**
      * 文件删除
      */
     public String deleteFile(){
         Integer fileid = Integer.parseInt(requestSession.getParameter("fileid"));
-        folderid = Integer.parseInt(requestSession.getParameter("folderid"));
+        folderid = Integer.parseInt(requestSession.getParameter("parentid"));
         selectDao.deletFile(fileid);
         return SUCCESS;
     }

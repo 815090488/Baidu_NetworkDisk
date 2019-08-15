@@ -316,21 +316,26 @@
                     <td>-</td>
                 </tr>
 
+                <%--                文件夹删除--%>
                 <c:forEach var="folders" items="${folders}">
                     <tr>
                         <td>
                             <img src="/img/1.jpg" style="width: 15px;height: 20px;margin-top: 20px;">
-                            <a style="text-decoration: none; color: black;"  href="seleFolderByName.action?parentid=${folders.folderid}">
+                            <a style="text-decoration: none; color: black;"
+                               href="seleFolderByName.action?parentid=${folders.folderid}">
                                 <span> ${folders.foldername}</span>
                             </a>
                         </td>
                         <td>-</td>
                         <td>${folders.createTime}</td>
-                        <td>-</td>
+                        <td>
+                            <a href="deleteFold.action?folderid=${folders.folderid}&parentid=${folders.parentid}"><span
+                                    id="delete${folders.folderid}">删除</span></a>
+                        </td>
                     </tr>
                 </c:forEach>
 
-
+                <%--文件删除--%>
                 <c:forEach var="filetbls" items="${filetbls}">
                     <tr>
                         <td>
@@ -341,7 +346,7 @@
                         <td>${filetbls.filesize} M</td>
                         <td>${filetbls.uploadDate}</td>
                         <td>
-                            <a href="deleteFile.action?fileid=${filetbls.fileId}&folderid=${folder.folderid}"><span
+                            <a href="deleteFile.action?fileid=${filetbls.fileId}&parentid=${filetbls.folderid}"><span
                                     id="delete${filetbls.fileId}">删除</span></a>
                         </td>
                     </tr>
